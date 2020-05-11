@@ -83,46 +83,41 @@ func jsonPrettyPrint(in string) string {
 }
 
 func main() {
+	var region string
+	var role string
+	var headerHost string
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "region, r",
-				Usage:    "AWS region we are using (e.g. us-west-1)",
-				Required: true,
+				Name:        "region",
+				Usage:       "AWS region we are using (e.g. us-west-1)",
+				Destination: &region,
+				Required:    true,
 			},
 			&cli.StringFlag{
-				Name:     "role, ro",
-				Usage:    "Vault role we are using",
-				Required: true,
+				Name:        "role",
+				Usage:       "Vault role we are using",
+				Destination: &role,
+				Required:    true,
 			},
 			&cli.StringFlag{
-				Name:     "host, h",
-				Usage:    "Host for the  X-Vault-AWS-IAM-Server-ID header",
-				Required: true,
-			},
-			&cli.StringFlag{
-				Name:     "url, u",
-				Usage:    "Vault URL (e.g. https://vault.example.com:8200)",
-				EnvVars:  "VAULT_ADDR",
-				Required: true,
+				Name:        "host",
+				Usage:       "Host for the  X-Vault-AWS-IAM-Server-ID header",
+				Destination: &headerHost,
+				Required:    true,
 			},
 		},
-
-		Name:  "simple-iam-vault-cli",
-		Usage: "Relatively simple AWS IAM login to Hashicorp Vault",
 		Action: func(c *cli.Context) error {
-			region := os.Args[1]
-			role := os.Args[2]
-			host := os.Args[3]
-			loginData, _ := GenerateLoginData(region, host)
+			loginData, _ := GenerateLoginData(region, headerHost)
 			VaultLogin(role, loginData)
 			return nil
 		},
+		Name:  "simple-iam-vault-cli - a 'simple' IAM vault login CLI",
+		Usage: "VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --role [Vault role] --host [Host for Server-ID header]",
 	}
 
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 }
