@@ -1,8 +1,8 @@
-name: Go
+name: Create release
 
-on:
-  push:
-    branches: [ master ]
+on: 
+  release:
+    types: [created]
 
 jobs:
   release-linux-amd64:
