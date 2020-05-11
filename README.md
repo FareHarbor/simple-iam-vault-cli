@@ -1,10 +1,10 @@
 # simple-iam-vault-cli
 
-Minimalist binary to authenticate to vault using IAM Instance Role.
+A 'simple' binary to authenticate to vault using IAM Instance Role.
 
-Expects vault base url to be set using VAULT_ADDR env var
+Expects vault base url to be set using VAULT_ADDR envvar, or you can pass when invoking.
 
-Usage: `./simple-iam-vault-cli REGION VAULT_ROLE`
+Usage: `VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --role [Vault role] --host [Host for Server-ID header]`
 
 ## Building
 
