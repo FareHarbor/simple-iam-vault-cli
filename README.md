@@ -1,5 +1,7 @@
 # simple-iam-vault-cli
 
+![Go](https://github.com/bermannoah/simple-iam-vault-cli/workflows/Go/badge.svg)
+
 A 'simple' binary to authenticate to vault using IAM Instance Role.
 
 Expects vault base url to be set using VAULT_ADDR envvar, or you can pass when invoking.
