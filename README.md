@@ -11,6 +11,7 @@ Usage: `VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --ro
 ## Building
 
 **Local**: `go mod download && go build`
+**Pre-built, from Github**: https://github.com/bermannoah/simple-iam-vault-cli/releases
 
 ## Special thanks...
 
