@@ -69,17 +69,7 @@ func VaultLogin(role string, loginData map[string]interface{}) {
 	defer response.Body.Close()
 
 	body, _ := ioutil.ReadAll(response.Body)
-	fmt.Println(jsonPrettyPrint(string(body)))
-}
-
-// jsonPrettyPrint borrowed from https://stackoverflow.com/a/36544455/5981682
-func jsonPrettyPrint(in string) string {
-	var out bytes.Buffer
-	err := json.Indent(&out, []byte(in), "", "")
-	if err != nil {
-		return in
-	}
-	return out.String()
+	fmt.Println(string(body))
 }
 
 func main() {
