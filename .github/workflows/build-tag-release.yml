@@ -43,7 +43,7 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{ format('simple-iam-vault-cli-{0}-{1}', steps.create_new_tag.outputs.new_tag, github.sha) }}
+        tag_name: ${{ steps.create_new_tag.outputs.new_tag) }}
         release_name: Release ${{ steps.create_new_tag.outputs.new_tag }}
         draft: false
         prerelease: false
