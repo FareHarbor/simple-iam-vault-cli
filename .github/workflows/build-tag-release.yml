@@ -46,6 +46,7 @@ jobs:
         tag: ${{ steps.create_new_tag.outputs.new_tag }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
+    - uses: actions/checkout@v2
     - name: Build and push release artifact linux/amd64
       if: ${{ success() }}
       uses: wangyoucao577/go-release-action@master
@@ -53,3 +54,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: linux
         goarch: amd64
+        goversion: 1.14
+        build_flags: -v
