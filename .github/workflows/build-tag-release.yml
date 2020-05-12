@@ -9,6 +9,8 @@ jobs:
   setup_and_tag:
     name: Build, tag, release
     runs-on: ubuntu-latest
+    outputs:
+      new_tag_name: ${{ steps.create_new_tag.outputs.new_tag }}
     steps:
 
     - name: Set up Go 1.x
@@ -35,7 +37,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
-        INITIAL_VERSION: v0.4
       id: create_new_tag
       
     - uses: actions/checkout@v1
