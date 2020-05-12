@@ -1,4 +1,4 @@
-name: Go
+name: Build Tag Release
 
 on:
   push:
@@ -44,8 +44,8 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{ steps.create_tag.new_tag }}
-        release_name: Release ${{ steps.create_tag.new_tag }}
+        tag_name: ${{ steps.create_tag.outputs.new_tag }}
+        release_name: Release ${{ steps.create_tag.outputs.new_tag }}
         draft: false
         prerelease: false
 
