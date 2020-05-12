@@ -1,6 +1,6 @@
-name: Create release
+name: create release binary for linux
 
-on: 
+on:
   release:
     types: [created]
 
