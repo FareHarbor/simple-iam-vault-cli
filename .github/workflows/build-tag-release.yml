@@ -35,7 +35,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WITH_V: true
-        INITIAL_VERSION: 0.4.0
+        INITIAL_VERSION: v0.4
       id: create_new_tag
       
     - name: Create Release
