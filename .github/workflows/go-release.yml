@@ -2,7 +2,7 @@ name: Create release
 
 on: 
   release:
-    types: [created, published, edited]
+    types: [created]
 
 jobs:
   release-linux-amd64:
