@@ -28,20 +28,23 @@ jobs:
       run: go build -v .
       
     - uses: actions/checkout@master
-    - name: Bump version and push tag
-      if: ${{ success() }}
-      uses: mathieudutour/github-tag-action@v4
       with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-      id: create_tag
+        fetch-depth: '0'
+    - name: Bump version and push tag
+      uses: anothrNick/github-tag-action@1.17.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        INITIAL_VERSION: 0.4.0
+      id: create_new_tag
       
     - name: Create Release
       if: ${{ success() }}
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{ format('simple-iam-vault-cli-{0}-{1}', steps.create_tag.outputs.new_tag, github.sha) }}
-        release_name: Release ${{ steps.create_tag.outputs.new_tag }}
+        tag_name: ${{ format('simple-iam-vault-cli-{0}-{1}', steps.create_new_tag.outputs.new_tag, github.sha) }}
+        release_name: Release ${{ steps.create_new_tag.outputs.new_tag }}
         draft: false
         prerelease: false
       id: create_release
