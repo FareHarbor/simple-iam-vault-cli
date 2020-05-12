@@ -38,16 +38,13 @@ jobs:
         INITIAL_VERSION: v0.4
       id: create_new_tag
       
-    - name: Create Release
+    - uses: actions/checkout@v1
+    - name: Create release
       if: ${{ success() }}
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: ${{ steps.create_new_tag.outputs.new_tag }}
-        release_name: Release ${{ steps.create_new_tag.outputs.new_tag }}
-        draft: false
-        prerelease: false
-      id: create_release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ steps.create_new_tag.outputs.new_tag }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push release artifact linux/amd64
       if: ${{ success() }}
