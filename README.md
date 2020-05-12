@@ -1,6 +1,6 @@
 # simple-iam-vault-cli
 
-![Go](https://github.com/bermannoah/simple-iam-vault-cli/workflows/Go/badge.svg)
+![Build Tag Release](https://github.com/bermannoah/simple-iam-vault-cli/workflows/Build%20Tag%20Release/badge.svg)
 
 A 'simple' binary to authenticate to vault using IAM Instance Role.
 
