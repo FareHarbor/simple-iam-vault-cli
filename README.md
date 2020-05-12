@@ -12,6 +12,8 @@ Usage: `VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --ro
 
 **Local**: `go mod download && go build`
 
+**Pre-built, from Github**: https://github.com/bermannoah/simple-iam-vault-cli/releases
+
 ## Special thanks...
 
 ...to stormbeta for doing the work [here](https://github.com/stormbeta/snippets/tree/master/golang/vault-iam-auth).
