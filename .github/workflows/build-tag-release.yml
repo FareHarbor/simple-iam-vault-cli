@@ -54,5 +54,5 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: linux
         goarch: amd64
-        goversion: 1.14
+        goversion: 1.13
         build_flags: -v
