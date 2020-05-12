@@ -51,7 +51,7 @@ jobs:
 
     - name: release linux/amd64
       if: ${{ success() }}
-      uses: actions/checkout@v2, wangyoucao577/go-release-action@master
+      uses: wangyoucao577/go-release-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: linux
