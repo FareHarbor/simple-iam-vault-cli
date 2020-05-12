@@ -1,4 +1,4 @@
-name: Build Tag Release
+name: build check - create tag - new release
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
 
     - name: Build
       run: go build -v .
-      
+
     - uses: actions/checkout@master
       with:
         fetch-depth: '0'
@@ -38,7 +38,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
         WITH_V: true
       id: create_new_tag
-      
+
     - uses: actions/checkout@v1
     - name: Create release
       if: ${{ success() }}
