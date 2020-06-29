@@ -51,7 +51,7 @@ func GenerateLoginData(configuredRegion string, configuredHost string) (map[stri
 }
 
 // VaultLogin is the function that takes the login data and sends it to Vault.
-func VaultLogin(role string, loginData map[string]interface{}) {
+func VaultLogin(role string, loginData map[string]interface{}, onlyToken bool) {
 	var vaultAddr = os.Getenv("VAULT_ADDR")
 	//TODO: Make configurable
 	awsAuthPath := "auth/aws"
@@ -67,9 +67,29 @@ func VaultLogin(role string, loginData map[string]interface{}) {
 		panic(err)
 	}
 	defer response.Body.Close()
-
 	body, _ := ioutil.ReadAll(response.Body)
-	fmt.Println(jsonPrettyPrint(string(body)))
+	if onlyToken {
+		fmt.Println(parseResponse(string(body)))
+	} else {
+		fmt.Println(jsonPrettyPrint(string(body)))
+	}
+}
+
+type HttpResponse struct {
+	Auth *HttpAuth `json:"auth"`
+}
+
+type HttpAuth struct {
+	ClientToken string `json:"client_token"`
+}
+
+func parseResponse(in string) string {
+	var httpResponse HttpResponse
+	err := json.Unmarshal([]byte(in), &httpResponse)
+	if err != nil {
+		panic(err)
+	}
+	return httpResponse.Auth.ClientToken
 }
 
 // jsonPrettyPrint borrowed from https://stackoverflow.com/a/36544455/5981682
@@ -86,6 +106,7 @@ func main() {
 	var region string
 	var role string
 	var headerHost string
+	var onlyToken bool
 	app := &cli.App{
 		Flags: []cli.Flag{
 			&cli.StringFlag{
@@ -106,14 +127,19 @@ func main() {
 				Destination: &headerHost,
 				Required:    true,
 			},
+			&cli.BoolFlag{
+				Name:        "only-token",
+				Usage:       "If present, return the vault token only",
+				Destination: &onlyToken,
+			},
 		},
 		Action: func(c *cli.Context) error {
 			loginData, _ := GenerateLoginData(region, headerHost)
-			VaultLogin(role, loginData)
+			VaultLogin(role, loginData, onlyToken)
 			return nil
 		},
 		Name:  "simple-iam-vault-cli - a 'simple' IAM vault login CLI",
-		Usage: "VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --role [Vault role] --host [Host for Server-ID header]",
+		Usage: "VAULT_ADDR=[vault url] ./simple-iam-vault-cli --region [AWS region] --role [Vault role] --host [Host for Server-ID header] --only-token (optional)",
 	}
 
 	err := app.Run(os.Args)
